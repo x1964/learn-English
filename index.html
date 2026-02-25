@@ -27,6 +27,8 @@
             --text-dim: #a0a0a0;
             --danger: #ff4757;
             --warning: #ffa502;
+            --blue: #1e40af;
+            --red: #dc2626;
         }
         
         body {
@@ -70,11 +72,11 @@
         .blast-header {
             position: fixed;
             top: 0; left: 0; right: 0;
-            background: rgba(5,5,5,0.85);
+            background: rgba(5,5,5,0.9);
             backdrop-filter: blur(20px);
             border-bottom: 2px solid var(--green);
             box-shadow: 0 0 30px var(--green-glow);
-            padding: 15px 40px;
+            padding: 10px 40px;
             z-index: 1000;
             transform: translateY(-100%);
         }
@@ -84,25 +86,53 @@
             display: flex; justify-content: space-between; align-items: center;
         }
         
-        .logo-nuke {
-            display: flex; align-items: center; gap: 15px;
-            font-size: 2rem; font-weight: 900;
+        /* اللوجو المطور */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
-        .logo-icon {
-            background: linear-gradient(145deg, #00f593, #00b56e);
-            width: 60px; height: 60px;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 40px #00f593;
-            animation: morph 4s infinite;
-            font-size: 1.8rem;
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            box-shadow: 0 0 30px var(--green-glow);
+            animation: logoFloat 3s ease-in-out infinite;
+            transition: all 0.3s;
         }
         
-        @keyframes morph {
-            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-            50% { border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%; }
-            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        .logo-image:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 50px var(--green);
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-main {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--blue);
+            text-shadow: 0 0 20px rgba(30, 64, 175, 0.5);
+            line-height: 1.2;
+        }
+        
+        .logo-sub {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--red);
+            letter-spacing: 1px;
         }
         
         .nav-btn {
@@ -139,14 +169,44 @@
             transform: scale(1.07);
         }
         
-        /* الهيرو */
+        /* الهيرو مع اللوجو الكبير */
         .hero-blast {
-            text-align: center; padding: 180px 20px 100px;
+            text-align: center; padding: 160px 20px 80px;
             max-width: 1200px; margin: 0 auto;
         }
         
+        .hero-logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: white;
+            padding: 10px;
+            margin: 0 auto 30px;
+            box-shadow: 0 0 60px var(--green-glow);
+            animation: heroLogoPulse 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .hero-logo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 100px var(--green);
+        }
+        
+        @keyframes heroLogoPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 60px var(--green-glow);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 0 80px var(--green);
+            }
+        }
+        
         .hero-title {
-            font-size: 4.2rem; font-weight: 900; line-height: 1.2;
+            font-size: 3.5rem; font-weight: 900; line-height: 1.2;
             opacity: 0; transform: translateY(40px);
         }
         
@@ -158,7 +218,7 @@
         }
         
         .hero-sub {
-            font-size: 1.5rem; color: var(--text-dim); margin: 30px auto 40px;
+            font-size: 1.4rem; color: var(--text-dim); margin: 25px auto 40px;
             max-width: 700px; opacity: 0; transform: translateY(30px);
         }
         
@@ -191,7 +251,7 @@
         .search-nuke {
             background: rgba(20,20,20,0.7); backdrop-filter: blur(20px);
             border: 1px solid var(--green); border-radius: 70px;
-            margin: 60px auto; max-width: 900px; padding: 15px 25px;
+            margin: 50px auto; max-width: 900px; padding: 15px 25px;
             display: flex; align-items: center;
             box-shadow: 0 0 60px var(--green-glow);
             transition: all 0.3s;
@@ -547,33 +607,19 @@
             transition: opacity 0.5s;
         }
         
-        .atom {
-            width: 120px; height: 120px;
-            border: 4px solid transparent;
-            border-top: 4px solid var(--green);
-            border-right: 4px solid var(--green);
+        .loader-logo {
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            box-shadow: 0 0 40px var(--green);
-            position: relative;
+            background: white;
+            padding: 10px;
+            animation: loaderPulse 1.5s infinite;
+            box-shadow: 0 0 60px var(--green);
         }
         
-        .atom::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px; height: 60px;
-            background: var(--green);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: pulse 1s infinite;
-        }
-        
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 60px var(--green); }
+            50% { transform: scale(1.1); box-shadow: 0 0 100px var(--green); }
         }
         
         .hidden { opacity: 0; pointer-events: none; }
@@ -611,12 +657,16 @@
         
         /* Responsive */
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-logo { width: 120px; height: 120px; }
             .cards-grid { grid-template-columns: 1fr; }
             .nav-btn { padding: 10px 20px; font-size: 0.9rem; }
             .search-nuke { margin: 30px 20px; }
             .progress-nuke { width: 90%; padding: 15px 25px; }
             .progress-nuke .bar { width: 150px; }
+            .logo-image { width: 50px; height: 50px; }
+            .logo-main { font-size: 1.2rem; }
+            .logo-sub { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -624,19 +674,22 @@
     <canvas id="nuke-canvas"></canvas>
     <div class="glow-overlay"></div>
 
-    <!-- LOADER -->
+    <!-- LOADER مع اللوجو -->
     <div class="loader-nuke" id="loader">
-        <div class="atom"></div>
-        <h2 style="color: #00f593; font-size: 1.5rem;">تشغيل المفاعل اللغوي...</h2>
-        <p style="color: #666; font-size: 0.9rem;">جاري تحميل 5000+ كلمة نووية</p>
+        <img src="logo.png" alt="English Vocabulary Hub" class="loader-logo">
+        <h2 style="color: #00f593; font-size: 1.5rem;">جاري تشغيل المفاعل...</h2>
+        <p style="color: #666; font-size: 0.9rem;">English Vocabulary Hub</p>
     </div>
 
-    <!-- HEADER -->
+    <!-- HEADER مع اللوجو -->
     <header class="blast-header" id="header">
         <div class="header-inner">
-            <div class="logo-nuke">
-                <div class="logo-icon">⚡</div>
-                <span>ENGLISH <span style="color:#00f593;">NUKE</span></span>
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo" class="logo-image">
+                <div class="logo-text">
+                    <span class="logo-main">English</span>
+                    <span class="logo-sub">Vocabulary Hub</span>
+                </div>
             </div>
             <div>
                 <button class="nav-btn" onclick="showFavs()">
@@ -654,8 +707,11 @@
 
     <!-- MAIN -->
     <div class="hero-blast">
+        <!-- اللوجو الكبير في الهيرو -->
+        <img src="logo.png" alt="English Vocabulary Hub" class="hero-logo" onclick="spinLogo()">
+        
         <div class="hero-title glitch-text"><span>انفجر</span> في اللغة الإنجليزية</div>
-        <div class="hero-sub">أكتر من 5000 كلمة بالمفاعل النووي بتاع النطق والترجمة — يلا نبدأ القصف!</div>
+        <div class="hero-sub">منصة English Vocabulary Hub - أكتر من 5000 كلمة بالمفاعل النووي بتاع النطق والترجمة</div>
         <div class="stats-nuke">
             <div class="stat-nuke" id="statTotal">
                 <span class="num">0</span><br>
@@ -850,7 +906,6 @@
                 `;
                 container.appendChild(card);
 
-                // تعليم كمتعلم عند الظهور (أول ظهور)
                 if (!learnedNuke.includes(w.id)) {
                     learnedNuke.push(w.id);
                     localStorage.setItem('nukeLearned', JSON.stringify(learnedNuke));
@@ -858,7 +913,6 @@
             });
             updateNukeStats();
             
-            // GSAP animation
             gsap.from('.nuke-card', {
                 opacity: 0, 
                 y: 50, 
@@ -872,17 +926,12 @@
         function speakNuke(text, voice, e) {
             e.stopPropagation();
             const btn = e.currentTarget;
-            
             btn.classList.add('playing');
-            
             responsiveVoice.speak(text, voice, {
                 rate: 0.9, 
                 pitch: 1,
-                onend: () => {
-                    btn.classList.remove('playing');
-                }
+                onend: () => btn.classList.remove('playing')
             });
-            
             gsap.fromTo(btn, {scale:1}, {scale:1.2, duration:0.2, yoyo:true, repeat:1});
         }
 
@@ -896,8 +945,6 @@
                 favNuke.push(id);
                 btn.innerHTML = '<i class="fas fa-heart"></i>';
                 btn.classList.add('active');
-                
-                // Confetti explosion
                 confetti({
                     particleCount: 60,
                     spread: 80,
@@ -923,12 +970,11 @@
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                let cat = btn.dataset.cat;
-                renderNukeCards(cat, document.getElementById('nukeSearch').value.toLowerCase());
+                renderNukeCards(btn.dataset.cat, document.getElementById('nukeSearch').value.toLowerCase());
             });
         });
 
-        // عرض المفضلة فقط
+        // عرض المفضلة
         window.showFavs = function() {
             renderNukeCards('all', '');
             setTimeout(() => {
@@ -940,19 +986,28 @@
             }, 100);
         }
 
+        // spin logo
+        window.spinLogo = function() {
+            gsap.to('.hero-logo', {
+                rotation: 360,
+                duration: 1,
+                ease: "back.out(1.7)",
+                onComplete: () => gsap.set('.hero-logo', {rotation: 0})
+            });
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.3 },
+                colors: ['#1e40af', '#dc2626', '#00f593']
+            });
+        }
+
         // راندوم
         window.randomWordNuke = function() {
             let r = allWordsNuke[Math.floor(Math.random() * allWordsNuke.length)];
-            
-            // Visual feedback
-            gsap.to('.fab-nuke', {rotation: 360, duration: 0.5, onComplete: () => {
-                gsap.set('.fab-nuke', {rotation: 0});
-            }});
-            
+            gsap.to('.fab-nuke', {rotation: 360, duration: 0.5, onComplete: () => gsap.set('.fab-nuke', {rotation: 0})});
             responsiveVoice.speak(r.word, "UK English Male");
             setTimeout(() => responsiveVoice.speak(r.meaning, "Arabic Female"), 800);
-            
-            // Show toast
             showToast(`${r.word} = ${r.meaning}`);
         }
 
@@ -973,7 +1028,6 @@
             `;
             toast.textContent = message;
             document.body.appendChild(toast);
-            
             gsap.from(toast, {y: -50, opacity: 0, duration: 0.3});
             setTimeout(() => {
                 gsap.to(toast, {y: -50, opacity: 0, duration: 0.3, onComplete: () => toast.remove()});
@@ -987,7 +1041,6 @@
             const modal = document.getElementById('quizModal');
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('active'), 10);
-            
             quizIndex = 0;
             quizScore = 0;
             quizQuestions = allWordsNuke.sort(() => 0.5 - Math.random()).slice(0, 5);
@@ -1011,7 +1064,6 @@
                 `;
                 document.getElementById('quizOptions').innerHTML = '';
                 document.getElementById('nextQuizBtn').innerText = 'تحدي جديد';
-                
                 if (quizScore === quizQuestions.length) {
                     confetti({
                         particleCount: 300,
@@ -1046,7 +1098,6 @@
 
         window.selectQuiz = function(selected, correct) {
             document.querySelectorAll('.quiz-option').forEach(o => o.style.pointerEvents = 'none');
-            
             if (selected === correct) {
                 event.target.classList.add('correct');
                 quizScore++;
@@ -1062,11 +1113,7 @@
                     if (o.innerText === correct) o.classList.add('correct');
                 });
             }
-            
-            setTimeout(() => {
-                quizIndex++;
-                showQuizQ();
-            }, 1200);
+            setTimeout(() => { quizIndex++; showQuizQ(); }, 1200);
         }
 
         window.nextNukeQuestion = function() {
@@ -1087,7 +1134,6 @@
                 favNuke = [];
                 updateNukeStats();
                 renderNukeCards('all', '');
-                
                 confetti({
                     particleCount: 200,
                     spread: 100,
@@ -1097,7 +1143,7 @@
             }
         }
 
-        // WebGL خلفية
+        // WebGL
         function initNukeCanvas() {
             const canvas = document.getElementById('nuke-canvas');
             const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
@@ -1108,7 +1154,6 @@
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 30;
             
-            // Create particles
             const particlesGeometry = new THREE.BufferGeometry();
             const particlesCount = 3000;
             const posArray = new Float32Array(particlesCount * 3);
@@ -1118,8 +1163,6 @@
                 posArray[i] = (Math.random() - 0.5) * 100;
                 posArray[i + 1] = (Math.random() - 0.5) * 100;
                 posArray[i + 2] = (Math.random() - 0.5) * 100;
-                
-                // Green colors
                 colorArray[i] = 0;
                 colorArray[i + 1] = 0.96;
                 colorArray[i + 2] = 0.58;
@@ -1139,10 +1182,7 @@
             const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
             scene.add(particlesMesh);
             
-            // Mouse interaction
-            let mouseX = 0;
-            let mouseY = 0;
-            
+            let mouseX = 0, mouseY = 0;
             document.addEventListener('mousemove', (event) => {
                 mouseX = (event.clientX / window.innerWidth) * 2 - 1;
                 mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -1150,16 +1190,12 @@
             
             function animate() {
                 requestAnimationFrame(animate);
-                
                 particlesMesh.rotation.x += 0.0003;
                 particlesMesh.rotation.y += 0.0005;
-                
                 particlesMesh.rotation.x += mouseY * 0.0005;
                 particlesMesh.rotation.y += mouseX * 0.0005;
-                
                 renderer.render(scene, camera);
             }
-            
             animate();
             
             window.addEventListener('resize', () => {
@@ -1174,16 +1210,15 @@
             initNukeCanvas();
             renderNukeCards('all', '');
             
-            // GSAP animations
             gsap.to('#header', {y: 0, duration: 0.8, ease: "power3.out"});
-            gsap.to('.hero-title', {opacity: 1, y: 0, duration: 0.9, delay: 0.3, ease: "power3.out"});
-            gsap.to('.hero-sub', {opacity: 1, y: 0, duration: 0.9, delay: 0.5, ease: "power3.out"});
-            gsap.to('.stat-nuke', {opacity: 1, scale: 1, stagger: 0.2, delay: 0.8, ease: "back.out(1.7)"});
+            gsap.to('.hero-logo', {scale: 1, opacity: 1, duration: 1, delay: 0.2, ease: "back.out(1.7)"});
+            gsap.to('.hero-title', {opacity: 1, y: 0, duration: 0.9, delay: 0.5, ease: "power3.out"});
+            gsap.to('.hero-sub', {opacity: 1, y: 0, duration: 0.9, delay: 0.7, ease: "power3.out"});
+            gsap.to('.stat-nuke', {opacity: 1, scale: 1, stagger: 0.2, delay: 1, ease: "back.out(1.7)"});
             
-            // Hide loader
             setTimeout(() => {
                 document.getElementById('loader').classList.add('hidden');
-            }, 1500);
+            }, 2000);
         }
     </script>
 </body>
